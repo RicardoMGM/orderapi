@@ -25,12 +25,12 @@ public class OrderConsumer {
     public void processOrder(Order order) {
         log.info("Recebendo pedido da fila: " + order.getOrderId());
 
-        // Pausa por 1 minuto
-        try {
+        // Pausa por 1 minuto, apenas para testar
+      /*  try {
             Thread.sleep(60000); // 1 minuto em milissegundos
         } catch (InterruptedException e) {
             log.error("Erro durante a pausa: " + e.getMessage());
-        }
+        }*/
 
         if (order.getProducts() != null) {
             Double total = 0.0;

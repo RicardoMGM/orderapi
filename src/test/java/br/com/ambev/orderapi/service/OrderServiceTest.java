@@ -3,6 +3,7 @@ package br.com.ambev.orderapi.service;
 import br.com.ambev.orderapi.model.Order;
 import br.com.ambev.orderapi.repository.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -35,6 +36,7 @@ class OrderServiceTest {
     }
 
     @Test
+    @DisplayName("Retornar Order quando ela existe no cache")
     void getOrderQuandoPedidoExisteNoCache() {
         when(orderCacheService.getOrderFromCache(testOrder.getOrderId())).thenReturn(testOrder);
 
@@ -46,6 +48,7 @@ class OrderServiceTest {
     }
 
     @Test
+    @DisplayName("Retornar Order quando ela não existe no cache, mas existe no banco")
     void getOrderQuandoPedidoNaoEstaNoCacheMasExisteNoBD() {
         when(orderCacheService.getOrderFromCache(testOrder.getOrderId())).thenReturn(null);
         when(orderRepository.findByOrderId(testOrder.getOrderId())).thenReturn(Optional.of(testOrder));
@@ -58,6 +61,7 @@ class OrderServiceTest {
     }
 
     @Test
+    @DisplayName("Retornar null quando a Order não existe no cache, e não existe no banco")
     void getOrderQuandoPedidoNaoExisteEmNenhumLugar() {
         when(orderCacheService.getOrderFromCache(testOrder.getOrderId())).thenReturn(null);
         when(orderRepository.findByOrderId(testOrder.getOrderId())).thenReturn(Optional.empty());
@@ -68,6 +72,7 @@ class OrderServiceTest {
     }
 
     @Test
+    @DisplayName("Verifica se Order existe no cache.")
     void verificarPedidoExisteNoCache() {
         when(orderCacheService.existsInCache(testOrder.getOrderId())).thenReturn(true);
 
@@ -78,6 +83,7 @@ class OrderServiceTest {
     }
 
     @Test
+    @DisplayName("Verifica se Order existe, caso não tenha no cache, o pedido não seja de hoje, mas exista no banco.")
     void verificarPedidoExisteQuandoOrderNaoEstaNoCacheENaoDeHojeMasExisteNoBD() {
         String oldOrderId = "20240101999999";
         when(orderCacheService.existsInCache(oldOrderId)).thenReturn(false);
@@ -89,7 +95,8 @@ class OrderServiceTest {
     }
 
     @Test
-    void verificarPedidoExisteQuandoOrderNaoNoCacheEnaoEDeHojeMasExisteNoBD() {
+    @DisplayName("Verifica se Order existe, caso não tenha no cache, o pedido não seja de hoje, e não exista no banco.")
+    void verificarPedidoExisteQuandoOrderNaoNoCacheEnaoEDeHojeENaoExisteNoBD() {
         String oldOrderId = "20240101999999";
         when(orderCacheService.existsInCache(oldOrderId)).thenReturn(false);
         when(orderRepository.findByOrderId(oldOrderId)).thenReturn(Optional.empty());

@@ -41,7 +41,7 @@ Edite o arquivo **`application.properties`** para se conectar aos serviços no D
 
 ```properties
 # Configuração do PostgreSQL
-spring.datasource.url=jdbc:postgresql://localhost:5432/orderapp
+spring.datasource.url=jdbc:postgresql://localhost:5432/orders_db
 spring.datasource.username=admin
 spring.datasource.password=admin
 spring.datasource.driver-class-name=org.postgresql.Driver
